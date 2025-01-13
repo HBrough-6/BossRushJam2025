@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ChaseMorgan.Strategy;
+using UnityEngine.Events;
 
 public class TestStrategy : IStrategy
 {
@@ -12,7 +13,7 @@ public class TestStrategy : IStrategy
         Debug.Log("Test strategy 1 disabled!");
     }
 
-    public void Execute(Client client)
+    public void Execute(Client client, UnityAction callback = null)
     {
         m_active = true;
         client.StartCoroutine(DoStuff());
