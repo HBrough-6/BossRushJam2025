@@ -3,7 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
+
+/* FILE HEADER
+ * AUTHOR: Chase Morgan | CREATED: 01/11/2025
+ * UPDATED: 01/11/2025 | BY: Chase Morgan  | COMMENTS: added class
+ * FILE DESCRIPTION: Basic Health and AIBehaviour class for all AI to inherit from
+ */
 
 [Serializable]
 public struct HealthEvent //These will fire methods if a certain threshold of health is met. These can be set either in the inspector or via code.
@@ -42,6 +49,7 @@ public struct HealthEvent //These will fire methods if a certain threshold of he
     }
 }
 
+[RequireComponent(typeof(NavMeshAgent))]
 public abstract class AIBehaviour : Client
 {
     [SerializeField]
@@ -83,6 +91,7 @@ public abstract class AIBehaviour : Client
 
     protected virtual void Death()
     {
+        DisableAllStrategies();
         onDeath?.Invoke();
     }
 

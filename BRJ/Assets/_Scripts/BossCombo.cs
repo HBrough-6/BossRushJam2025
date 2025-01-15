@@ -4,6 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* FILE HEADER
+ * AUTHOR: Chase Morgan | CREATED: 01/12/2025
+ * UPDATED: 01/12/2025 | BY: Chase Morgan | COMMENTS: Added class
+ * FILE DESCRIPTION: BossCombo class to hold data for combos
+ */
+
 [CreateAssetMenu(fileName = "NewBossCombo", menuName = "Boss/New Combo")]
 public class BossCombo : ScriptableObject
 {

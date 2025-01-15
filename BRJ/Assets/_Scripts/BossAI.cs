@@ -7,13 +7,24 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody))]
+/* FILE HEADER
+ * AUTHOR: Chase Morgan | CREATED: 01/11/2025
+ * UPDATED: 01/12/2025 | BY: Chase Morgan  | COMMENTS: Added ability for audio to be played
+ * FILE DESCRIPTION: Parent Boss AI class to handle most things that bosses will need to do
+ */
+
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
 public class BossAI : AIBehaviour , ISubject
 {
+    protected AudioSource m_audioSource;
     protected BossState m_state = 0;
 
     [SerializeField]
     protected BossMoveset[] m_movesets;
+
+    [Header("Audio")]
+    [SerializeField]
+    protected AudioClip m_deathAudio;
 
     protected List<IStrategy> m_baseStrategies = new();
     public BossState CurrentPhase
@@ -35,6 +46,38 @@ public class BossAI : AIBehaviour , ISubject
             base.Health = value;
             NotifyObservers();
         }
+    }
+
+
+    /// <summary>
+    /// Play audio for the boss
+    /// </summary>
+    /// <param name="clip">The clip to play</param>
+    /// <param name="overrideClip">If the clip should replace the current permanent clip</param>
+    public virtual void PlayAudio(AudioClip clip, bool overrideClip = false)
+    {
+        if (m_audioSource == null || clip == null) return;
+
+        if (overrideClip)
+        {
+            m_audioSource.clip = clip;
+            m_audioSource.Play();
+        }
+        else
+        {
+            m_audioSource.PlayOneShot(clip);
+        }
+    }
+
+    /// <summary>
+    /// Play audio for the boss
+    /// </summary>
+    /// <param name="clip">The clip to play</param>
+    public virtual void PlayAudio(AudioClip clip) //This allows us to expose it to the inspector unlike the other method
+    {
+        if (m_audioSource == null || clip == null) return;
+
+        m_audioSource.PlayOneShot(clip);
     }
 
     public ArrayList Observers { get; set; } = new();
@@ -78,7 +121,7 @@ public class BossAI : AIBehaviour , ISubject
 
         for (int index = 0; index < strats.Count; index++) //Since we need to convert from variable to type we need to use reflection to invoke a generic method. 
         {
-            MethodInfo info = typeof(Client).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => {
+            MethodInfo info = typeof(Client).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => { //Gets the first method that matches these parameters
                 return m.Name == nameof(ApplyStrategy) &&
                             m.IsGenericMethodDefinition &&
                             m.GetParameters().Length == 1 &&
@@ -106,6 +149,14 @@ public class BossAI : AIBehaviour , ISubject
         MoveStrategy move = new MoveStrategy(this, Camera.main.transform);
         m_baseStrategies.Add(move);
         m_strategies.Add(move);
+        m_audioSource = GetComponent<AudioSource>(); //Should never be null since we require it on the class
+    }
+
+    protected override void Death()
+    {
+        base.Death();
+
+        PlayAudio(m_deathAudio);
     }
 
     private void OnGUI()

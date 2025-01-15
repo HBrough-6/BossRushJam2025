@@ -3,7 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
+
+/* FILE HEADER
+ * AUTHOR: Chase Morgan | CREATED: 01/12/2025
+ * UPDATED: 01/12/2025 | BY: Chase Morgan  | COMMENTS: Added class
+ * FILE DESCRIPTION: MoveStrategy to allow for an AIBehvaiour to move
+ */
 
 public class MoveStrategy : IStrategy
 {
@@ -12,6 +19,7 @@ public class MoveStrategy : IStrategy
     private Rigidbody m_rigid;
     private bool m_active = false;
     private bool m_slowingDown = false;
+    private NavMeshAgent m_agent;
 
     private UnityEvent m_event = new();
 
@@ -28,13 +36,17 @@ public class MoveStrategy : IStrategy
         MaxCloseRange = maxCloseRange;
 
         m_rigid = client.GetComponent<Rigidbody>();
+        m_agent = client.GetComponent<NavMeshAgent>();
+
+        m_agent.stoppingDistance = maxCloseRange;
     }
 
     public void Disable()
     {
         m_active = false;
-        m_client.StartCoroutine(SlowDown());
+        //m_client.StartCoroutine(SlowDown());
         m_event?.Invoke();
+        m_agent.isStopped = true;
     }
 
     public void Execute(Client client, UnityAction callback = null)
@@ -52,23 +64,23 @@ public class MoveStrategy : IStrategy
 
     private IEnumerator Move()
     {
-        bool db = false;
+        //bool db = false;
         while (m_active)
         {
-            if (Mathf.Abs(Vector3.Distance(new Vector3(m_client.transform.position.x, 0, m_client.transform.position.z),
+            /*if (Mathf.Abs(Vector3.Distance(new Vector3(m_client.transform.position.x, 0, m_client.transform.position.z),
                                  new Vector3(m_target.position.x, 0, m_target.position.z))) <= MaxCloseRange)
             {
                 if (!db)
                 {
                     db = true;
-                    m_client.StartCoroutine(SlowDown());
+                    //m_client.StartCoroutine(SlowDown());
                 }
 
                 yield return null;
                 continue;
             }
 
-            db = false;
+            db = false; */
 
 
             if (m_client.transform.rotation != Quaternion.LookRotation(m_target.position - m_client.transform.position, Vector3.up))
@@ -82,14 +94,17 @@ public class MoveStrategy : IStrategy
 
             Debug.Log("Moving");
 
-            Vector3 velocity = Vector3.ClampMagnitude(100 * Speed * Time.deltaTime * (m_target.transform.position - m_client.transform.position).normalized, Speed);
-            m_rigid.velocity = new Vector3(velocity.x, m_rigid.velocity.y, velocity.z);
+            m_agent.destination = m_target.transform.position;
+            m_agent.speed = Speed;
+
+            //Vector3 velocity = Vector3.ClampMagnitude(100 * Speed * Time.deltaTime * (m_target.transform.position - m_client.transform.position).normalized, Speed);
+            //m_rigid.velocity = new Vector3(velocity.x, m_rigid.velocity.y, velocity.z);
 
             yield return new WaitForFixedUpdate();
         }
     }
 
-    private IEnumerator SlowDown()
+    /*private IEnumerator SlowDown()
     {
         if (m_slowingDown) yield break;
         Debug.Log("Slowing down");
@@ -109,5 +124,5 @@ public class MoveStrategy : IStrategy
         }
 
         m_slowingDown = false;
-    }
+    } */
 }

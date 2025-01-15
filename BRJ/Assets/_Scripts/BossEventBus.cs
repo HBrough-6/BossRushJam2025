@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/* FILE HEADER
+ * AUTHOR: Chase Morgan | CREATED: 01/12/2025
+ * UPDATED: 01/12/2025 | BY: Chase Morgan  | COMMENTS: Added class
+ * FILE DESCRIPTION: Boss event bus
+ */
+
 public enum BossState
 {
     PhaseZero, //This is an idle phase before the player will activate the boss

@@ -38,7 +38,6 @@ namespace ChaseMorgan.Strategy
         /// Attempts to apply a strategy to the current client
         /// </summary>
         /// <param name="strategy">The strategy REFERENCE</param>
-
         public virtual void ApplyStrategy(IStrategy strategy, UnityAction callback = null)
         {
             if (m_activeStrategies.Contains(strategy)) //If this strategy is already active, ignore...
@@ -78,12 +77,12 @@ namespace ChaseMorgan.Strategy
             m_activeStrategies.Add(strategy);
             strategy.Execute(this, callback);
         }
+
         /// <summary>
         /// Attempts to apply a strategy to the current client
         /// </summary>
         /// <typeparam name="T">The strategy TYPE</typeparam>
         /// <returns>true if successful</returns>
-
         public virtual bool ApplyStrategy<T>(UnityAction callback = null) where T : IStrategy //Generic so we can just apply strategies by type instead of instance
         {
             IStrategy strategy = m_strategies.OfType<T>().FirstOrDefault();
@@ -192,6 +191,16 @@ namespace ChaseMorgan.Strategy
             {
                 Debug.LogWarning("Tried to disable a strategy that was either unknown or inactive!\nIgnoring...");
             }
+        }
+
+        public virtual void DisableAllStrategies()
+        {
+            m_activeStrategies.ForEach((strat) =>
+            {
+                strat.Disable();
+            });
+
+            m_activeStrategies.Clear();
         }
 
         public virtual IStrategy TryGetStrategy<T>() where T : IStrategy
