@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 /* FILE HEADER
  * AUTHOR: Chase Morgan | CREATED: 01/11/2025
- * UPDATED: 01/12/2025 | BY: Chase Morgan  | COMMENTS: Added ability for audio to be played
+ * UPDATED: 01/14/2025 | BY: Chase Morgan  | COMMENTS: Added NavMesh compatibility
  * FILE DESCRIPTION: Parent Boss AI class to handle most things that bosses will need to do
  */
 
