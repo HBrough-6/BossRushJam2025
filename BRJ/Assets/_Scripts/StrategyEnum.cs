@@ -12,14 +12,36 @@ namespace ChaseMorgan.Strategy
 {
     public enum StrategyEnum
     {
-        Move
+        //Move,
+        SlamLeft,
+        SlamRight,
+        BigSlam,
+        SwipeLeft,
+        SwipeRight,
+        Roll,
+        Airstrike,
+        RockLift,
+        Charge,
+        Spin,
+        Sandstorm
     }
 
     public static class StrategyEnumerator
     {
         public static readonly IDictionary<StrategyEnum, Type> strategies = new Dictionary<StrategyEnum, Type>()
         {
-            { StrategyEnum.Move, typeof(MoveStrategy) }
+            //{ StrategyEnum.Move, typeof(MoveStrategy) },
+            { StrategyEnum.SlamLeft, typeof(SlamLeftStrategy) },
+            { StrategyEnum.SlamRight, typeof(SlamRightStrategy) },
+            { StrategyEnum.BigSlam, typeof(BigSlamStrategy) },
+            { StrategyEnum.SwipeLeft, typeof(SwipeLeftStrategy) },
+            { StrategyEnum.SwipeRight, typeof(SwipeRightStrategy) },
+            { StrategyEnum.Roll, typeof(RollStrategy) },
+            { StrategyEnum.Airstrike, typeof(AirstrikeStrategy) },
+            { StrategyEnum.RockLift, typeof(RockLiftStrategy) },
+            { StrategyEnum.Charge, typeof(ChargeStrategy) },
+            { StrategyEnum.Spin, typeof(SpinStrategy) },
+            { StrategyEnum.Sandstorm, typeof(SandstormStrategy) },
         };
     }
 }

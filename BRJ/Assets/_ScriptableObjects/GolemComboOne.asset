@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8498dd892777d648bdb3a4cf846cfc3, type: 3}
-  m_Name: NewBossMoveset
+  m_Script: {fileID: 11500000, guid: 9236428fe235c0e49bb2c0a0cbd371b1, type: 3}
+  m_Name: GolemComboOne
   m_EditorClassIdentifier: 
-  combos:
-  - {fileID: 11400000, guid: fe8613bce56a1c245a12b1d1c348efb9, type: 2}
-  attacks: 00000000
-  activePhase: 1
+  combo: 010000000200000001000000
+  timings: []
+  canBeCancelled: 0
