@@ -158,17 +158,4 @@ public class BossAI : AIBehaviour , ISubject
 
         PlayAudio(m_deathAudio);
     }
-
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Attempt Combo One"))
-        {
-            StartCoroutine(ApplyCombo(m_movesets[0].combos[0]));
-        }
-
-        if (GUILayout.Button("Disable move strategy"))
-        {
-            DisableStrategy<MoveStrategy>();
-        }
-    }
 }
