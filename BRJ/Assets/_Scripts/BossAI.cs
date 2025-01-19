@@ -131,7 +131,13 @@ public class BossAI : AIBehaviour , ISubject
             if (info != null)
             {
                 MethodInfo gen = info.MakeGenericMethod(strats[index]);
-                UnityAction callback = () => { finished = true; };
+
+                //We again have to use reflection to call this generic function to disable the strategy
+                //It's easier when we do this through code and not expose strategy interfaces, but it makes it harder for designers to create unique bosses
+                MethodInfo disable = typeof(Client).GetMethod(nameof(DisableStrategy), BindingFlags.Public | BindingFlags.Instance);
+                disable = disable.MakeGenericMethod(strats[index]);
+                UnityAction callback = () => { finished = true; disable.Invoke(this, null); };
+
                 Debug.Log(gen);
 
                 gen.Invoke(this, new object[] { callback });
