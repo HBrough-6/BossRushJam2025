@@ -25,6 +25,10 @@ public class GolemAI : BossAI
     private SwipeLeftStrategy m_swipeLeft;
     private SwipeRightStrategy m_swipeRight;
 
+    private ChargeStrategy m_leap;
+    private SpinStrategy m_spin;
+    private SandstormStrategy m_standstorm;
+
     protected override void Awake()
     {
         base.Awake();
