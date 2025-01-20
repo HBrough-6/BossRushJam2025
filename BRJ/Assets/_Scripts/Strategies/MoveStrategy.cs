@@ -18,7 +18,6 @@ public class MoveStrategy : IStrategy
     private Transform m_target;
     private Rigidbody m_rigid;
     private bool m_active = false;
-    private bool m_slowingDown = false;
     private NavMeshAgent m_agent;
 
     private UnityEvent m_event = new();
@@ -58,7 +57,6 @@ public class MoveStrategy : IStrategy
         }
 
         m_active = true;
-        m_slowingDown = false;
         client.StartCoroutine(Move());
     }
 

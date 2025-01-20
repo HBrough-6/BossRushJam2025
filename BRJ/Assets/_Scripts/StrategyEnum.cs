@@ -1,27 +1,29 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
 /* FILE HEADER
  * AUTHOR: Chase Morgan | CREATED: 01/12/2025
- * UPDATED: 01/12/2025 | BY: Chase Morgan  | COMMENTS: Added class
+ * UPDATED: 01/19/2025 | BY: Chase Morgan  | COMMENTS: updated enumerator
  * FILE DESCRIPTION: Holds data for strategy enumerators
  */
 
 namespace ChaseMorgan.Strategy
 {
+    //📋 = in progress
+    //✅ = finished
     public enum StrategyEnum
     {
-        //Move,
-        SlamLeft,
-        SlamRight,
-        BigSlam,
-        SwipeLeft,
-        SwipeRight,
-        Roll,
-        Airstrike,
-        RockLift,
-        Charge,
+        //Move, //Shouldn't be used as a strategy (the boss classes will handle it themselves)
+        SlamLeft, //✅
+        SlamRight, //✅
+        BigSlam, //✅
+        SwipeLeft, //📋
+        SwipeRight, //📋
+        Roll, //✅
+        Airstrike, //✅
+        RockLift, //✅
+        Leap,
         Spin,
         Sandstorm
     }
@@ -39,7 +41,7 @@ namespace ChaseMorgan.Strategy
             { StrategyEnum.Roll, typeof(RollStrategy) },
             { StrategyEnum.Airstrike, typeof(AirstrikeStrategy) },
             { StrategyEnum.RockLift, typeof(RockLiftStrategy) },
-            { StrategyEnum.Charge, typeof(ChargeStrategy) },
+            { StrategyEnum.Leap, typeof(ChargeStrategy) },
             { StrategyEnum.Spin, typeof(SpinStrategy) },
             { StrategyEnum.Sandstorm, typeof(SandstormStrategy) },
         };
