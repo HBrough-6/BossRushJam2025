@@ -2,6 +2,8 @@ using ChaseMorgan.Strategy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,6 +16,8 @@ public class SwipeLeftStrategy : IStrategy
     private string m_tag;
     private BossCollider[] m_arms;
     private bool m_triggered = false;
+    private Animator m_animator;
+
     public void Disable()
     {
         m_isActive = false;
@@ -25,6 +29,7 @@ public class SwipeLeftStrategy : IStrategy
     {
         m_isActive = true;
         m_callback.AddListener(callback);
+        m_animator.SetTrigger("swipeLeft");
     }
 
     public SwipeLeftStrategy(Client client, BossCollider[] armColliders, string playerTag, Action<object[]> onCollision)
@@ -39,12 +44,22 @@ public class SwipeLeftStrategy : IStrategy
         {
             arm.onTriggerEnter += ArmTriggered;
         }
+
+        m_animator = client.GetComponent<Animator>();
+        foreach (AnimationStateController control in m_animator.GetBehaviours<AnimationStateController>())
+        {
+            if (control.Label == "Swipe Left")
+            {
+                control.onStateExit += () => { m_callback.Invoke(); };
+            }
+        }
     }
 
     private void ArmTriggered(Collider other)
     {
-        if (other.CompareTag(m_tag) && !m_triggered)
+        if (other.CompareTag(m_tag) && !m_triggered && m_isActive)
         {
+            Debug.Log("Arm was triggered!");
             m_triggered = true;
             /*switch (m_client.GetType())
             {
@@ -53,9 +68,17 @@ public class SwipeLeftStrategy : IStrategy
                     break;
             } */
 
-            OnCollision?.Invoke(new object[] { GetType(), other });
+            OnCollision?.Invoke(new object[] { GetType().Name, other });
 
             m_callback.Invoke();
+        }
+    }
+
+    ~SwipeLeftStrategy()
+    {
+        foreach (var arm in m_arms)
+        {
+            arm.onTriggerEnter -= ArmTriggered;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace ChaseMorgan.Strategy
 
                 m_activeStrategies.Clear();
             }
-
+            
             m_activeStrategies.Add(strategy);
             strategy.Execute(this, callback);
         }

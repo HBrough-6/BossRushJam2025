@@ -41,6 +41,10 @@ public class GolemSettings : ScriptableObject
     [SerializeField, Min(0.0f)]
     private float strikeAirTime = 4.0f;
 
+    [Header("Sandstorm")]
+    [SerializeField]
+    private GameObject sandstormPrefab;
+
     public GameObject HazardAreaPrefab => hazardAreaPrefab;
     public string PlayerTag => playerTag;
     public float DangerZoneUpdateFrequency => dangerZoneUpdateFrequency;
@@ -59,4 +63,5 @@ public class GolemSettings : ScriptableObject
     public float RollDamage => rollDamage;
     public float StrikeMagnitude => strikeMagnitude;
     public float StrikeAirTime => strikeAirTime;
+    public GameObject SandstormPrefab => sandstormPrefab;
 }

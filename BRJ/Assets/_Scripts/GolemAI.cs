@@ -29,7 +29,7 @@ public class GolemAI : BossAI
 
     private ChargeStrategy m_leap;
     private SpinStrategy m_spin;
-    private SandstormStrategy m_standstorm;
+    private SandstormStrategy m_sandstorm;
 
     protected override void Awake()
     {
@@ -50,6 +50,8 @@ public class GolemAI : BossAI
         m_strategies.Add(m_swipeLeft);
         m_swipeRight = new SwipeRightStrategy(this, m_rightArms, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_swipeRight);
+        m_sandstorm = new SandstormStrategy(this, m_settings.SandstormPrefab, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
+        m_strategies.Add(m_sandstorm);
     }
 
     private void OnGUI()

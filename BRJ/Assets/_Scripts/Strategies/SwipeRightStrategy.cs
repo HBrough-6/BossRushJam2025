@@ -14,6 +14,7 @@ public class SwipeRightStrategy : IStrategy
     private event Action<object[]> OnCollision;
     private string m_tag;
     private bool m_triggered = false;
+    private Animator m_animator;
     public void Disable()
     {
         m_isActive = false;
@@ -25,6 +26,7 @@ public class SwipeRightStrategy : IStrategy
     {
         m_isActive = true;
         m_callback.AddListener(callback);
+        m_animator.SetTrigger("swipeRight");
     }
 
     public SwipeRightStrategy(Client client, BossCollider[] armColliders, string playerTag, Action<object[]> onCollision)
@@ -39,11 +41,20 @@ public class SwipeRightStrategy : IStrategy
         {
             arm.onTriggerEnter += ArmTriggered;
         }
+
+        m_animator = client.GetComponent<Animator>();
+        foreach (AnimationStateController control in m_animator.GetBehaviours<AnimationStateController>())
+        {
+            if (control.Label == "Swipe Right")
+            {
+                control.onStateExit += () => { m_callback.Invoke(); };
+            }
+        }
     }
 
     private void ArmTriggered(Collider other)
     {
-        if (other.CompareTag(m_tag) && !m_triggered)
+        if (other.CompareTag(m_tag) && !m_triggered && m_isActive)
         {
             m_triggered = true;
             /*switch (m_client.GetType())
@@ -53,9 +64,17 @@ public class SwipeRightStrategy : IStrategy
                     break;
             } */
 
-            OnCollision?.Invoke(new object[] { GetType(), other });
+            OnCollision?.Invoke(new object[] { GetType().Name, other });
 
             m_callback.Invoke();
+        }
+    }
+
+    ~SwipeRightStrategy()
+    {
+        foreach (var arm in m_arms)
+        {
+            arm.onTriggerEnter -= ArmTriggered;
         }
     }
 }

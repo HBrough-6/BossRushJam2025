@@ -32,3 +32,5 @@ MonoBehaviour:
   rollDamage: 0
   strikeMagnitude: 10
   strikeAirTime: 4
+  sandstormPrefab: {fileID: 2886264873590823706, guid: 8083a41f55cdd1a45bb636cdb77c248d,
+    type: 3}

@@ -144,7 +144,9 @@ public class BossAI : AIBehaviour , ISubject
             }
             yield return new WaitUntil(() => finished);
             finished = false;
-            yield return new WaitForSeconds(combo.timings[index]);
+
+            if (combo.timings.Length < index)
+                yield return new WaitForSeconds(combo.timings[index]);
         }
     }
 
