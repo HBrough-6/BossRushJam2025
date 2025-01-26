@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -210,6 +210,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c8811c7f57258274dabce6046cab52a9, type: 2}
   m_deathAudio: {fileID: 0}
   m_playerReference: {fileID: 1723675047}
+  m_leftArms:
+  - {fileID: 8518192249880481346}
+  - {fileID: 7681426581435540290}
+  - {fileID: 8240919565327540852}
+  m_rightArms:
+  - {fileID: 8322937255524067508}
+  - {fileID: 8766974253855771403}
+  - {fileID: 5188758171107050808}
   m_settings: {fileID: 11400000, guid: 78d56c977de08604abb35f3a702ab0fb, type: 2}
 --- !u!195 &244303969
 NavMeshAgent:

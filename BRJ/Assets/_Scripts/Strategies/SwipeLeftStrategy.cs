@@ -1,4 +1,5 @@
 using ChaseMorgan.Strategy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,15 @@ public class SwipeLeftStrategy : IStrategy
     private bool m_isActive = false;
     private Client m_client;
     private UnityEvent m_callback = new();
+    private event Action<object[]> OnCollision;
+    private string m_tag;
     private BossCollider[] m_arms;
+    private bool m_triggered = false;
     public void Disable()
     {
         m_isActive = false;
         m_callback.RemoveAllListeners();
+        m_triggered = false;
     }
 
     public void Execute(Client client, UnityAction callback = null)
@@ -22,9 +27,35 @@ public class SwipeLeftStrategy : IStrategy
         m_callback.AddListener(callback);
     }
 
-    public SwipeLeftStrategy(Client client, BossCollider[] armColliders)
+    public SwipeLeftStrategy(Client client, BossCollider[] armColliders, string playerTag, Action<object[]> onCollision)
     {
         m_client = client;
         m_arms = armColliders;
+        m_tag = playerTag;
+        m_arms = armColliders;
+        OnCollision += onCollision;
+
+        foreach (var arm in armColliders)
+        {
+            arm.onTriggerEnter += ArmTriggered;
+        }
+    }
+
+    private void ArmTriggered(Collider other)
+    {
+        if (other.CompareTag(m_tag) && !m_triggered)
+        {
+            m_triggered = true;
+            /*switch (m_client.GetType())
+            {
+                case Type t when t == typeof(GolemAI):
+                    GolemAI golem = (GolemAI)m_client;
+                    break;
+            } */
+
+            OnCollision?.Invoke(new object[] { GetType(), other });
+
+            m_callback.Invoke();
+        }
     }
 }

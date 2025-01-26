@@ -12,6 +12,8 @@ public class GolemAI : BossAI
 {
     [SerializeField]
     private GameObject m_playerReference;
+    [SerializeField]
+    private BossCollider[] m_leftArms, m_rightArms;
 
     [Header("Settings"), SerializeField]
     private GolemSettings m_settings;
@@ -44,9 +46,9 @@ public class GolemAI : BossAI
         m_strategies.Add(m_roll);
         m_airstrike = new AirstrikeStrategy(this, m_playerReference.transform, m_settings.HazardAreaPrefab, m_settings.StrikeMagnitude, m_settings.StrikeAirTime, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_airstrike);
-        m_swipeLeft = new SwipeLeftStrategy(this, null);
+        m_swipeLeft = new SwipeLeftStrategy(this, m_leftArms, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_swipeLeft);
-        m_swipeRight = new SwipeRightStrategy(this, null);
+        m_swipeRight = new SwipeRightStrategy(this, m_rightArms, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_swipeRight);
     }
 
