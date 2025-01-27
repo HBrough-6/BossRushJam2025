@@ -35,7 +35,8 @@ public class PlayerLocomotion : MonoBehaviour
     float rotationSpeed = 10f;
     [SerializeField]
     float fallingSpeed = 45f;
-
+    [SerializeField]
+    float walkingSpeed = 1;
 
     void Start()
     {
@@ -95,7 +96,7 @@ public class PlayerLocomotion : MonoBehaviour
 
         float speed = movementSpeed;
 
-        if (inputHandler.sprintFlag)
+        if (inputHandler.sprintFlag && inputHandler.moveAmount > 0.5f)
         {
 
             speed = sprintSpeed;
@@ -104,7 +105,17 @@ public class PlayerLocomotion : MonoBehaviour
         }
         else
         {
-            moveDirection *= speed;
+            if (inputHandler.moveAmount < 0.5f)
+            {
+                moveDirection *= walkingSpeed;
+                playerManager.isSprinting = false;
+            }
+            else
+            {
+                moveDirection *= speed;
+                playerManager.isSprinting = false;
+            }
+
         }
 
         Vector3 projectedVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);
