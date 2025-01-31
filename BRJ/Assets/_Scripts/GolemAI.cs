@@ -52,6 +52,8 @@ public class GolemAI : BossAI
         m_strategies.Add(m_swipeRight);
         m_sandstorm = new SandstormStrategy(this, m_settings.SandstormPrefab, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_sandstorm);
+        m_spin = new SpinStrategy(this, m_playerReference.transform, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
+        m_strategies.Add(m_spin);
     }
 
     private void OnGUI()
@@ -128,6 +130,10 @@ public class GolemAI : BossAI
         else if (m_activeStrategies.Contains(m_airstrike))
         {
             m_airstrike.Collision(collision);
+        }
+        else if (m_activeStrategies.Contains(m_spin))
+        {
+            m_spin.Collision(collision);
         }
     }
 }

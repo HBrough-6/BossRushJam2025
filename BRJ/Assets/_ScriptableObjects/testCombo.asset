@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9236428fe235c0e49bb2c0a0cbd371b1, type: 3}
   m_Name: testCombo
   m_EditorClassIdentifier: 
-  combo: 0a000000
+  combo: 09000000
   timings:
   - 0
   - 0
