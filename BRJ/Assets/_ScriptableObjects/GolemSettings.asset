@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fba30e99a11a82438e5adffa95ed5ce, type: 3}
+  m_Name: GolemSettings
+  m_EditorClassIdentifier: 
+  hazardAreaPrefab: {fileID: 1287642618475544619, guid: 04598a28590dd7044a0cdbe01efb7b45,
+    type: 3}
+  playerTag: MainCamera
+  dangerZoneUpdateFrequency: 0.25
+  leftRightSlamMagnitude: 5
+  leftRightSlamDamage: 0
+  bigSlamMagnitude: 10
+  bigSlamDamage: 0
+  leftSlamOffset: {x: -3.5, y: 0.5, z: 1.9999998}
+  rightSlamOffset: {x: 3.5, y: 0.5, z: 1.9999998}
+  bigSlamOffset: {x: 0, y: 0.5, z: 3}
+  rockPrefab: {fileID: 8913465906613399689, guid: 3f3047b3d9497db47b639c00dba5f506,
+    type: 3}
+  chooseTargetDirectionOnce: 1
+  maxRollTime: 5
+  rollSpeed: 10
+  rollUpdateFrequency: 0.25
+  rollDamage: 0
+  strikeMagnitude: 10
+  strikeAirTime: 4
