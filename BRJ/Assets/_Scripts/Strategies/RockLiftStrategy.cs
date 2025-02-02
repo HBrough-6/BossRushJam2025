@@ -24,6 +24,7 @@ public class RockLiftStrategy : IStrategy
         m_isActive = false;
         m_callback.RemoveAllListeners();
         m_rockInstances.ForEach(rock => { rock.transform.position = Vector3.zero; rock.SetActive(false); });
+        m_client.StopCoroutine(((GolemAI)m_client).ExposeCrystal());
         m_hazardAreaInstances.ForEach(hazard => { hazard.transform.position = Vector3.zero; hazard.SetActive(false); });
     }
 
@@ -32,6 +33,7 @@ public class RockLiftStrategy : IStrategy
         m_isActive = true;
         m_callback.AddListener(callback);
         m_client.StartCoroutine(RockLift());
+        m_client.StartCoroutine(((GolemAI)m_client).ExposeCrystal());
     }
 
     public RockLiftStrategy(Client client, Transform target, GameObject hazardAreaPrefab, GameObject rockPrefab, float rockAreaMagnitude = 15, int rockCount = 15)

@@ -22,6 +22,8 @@ public class GolemAI : BossAI
     private GameObject m_playerReference;
     [SerializeField]
     private BossCollider[] m_leftArms, m_rightArms;
+    [SerializeField]
+    private BossCollider m_eye;
 
     private BossMoveset m_currentMoveset;
 
@@ -43,6 +45,7 @@ public class GolemAI : BossAI
 
     private bool m_changeMoveset;
     private float m_attackInterval = 5.0f;
+    private float m_crystalHealth = 100f;
 
     protected override void Awake()
     {
@@ -67,6 +70,19 @@ public class GolemAI : BossAI
         m_strategies.Add(m_sandstorm);
         m_spin = new SpinStrategy(this, m_playerReference.transform, m_settings.PlayerTag, (o) => { Debug.Log("Collided with " + o[1].ToString()); });
         m_strategies.Add(m_spin);
+    }
+
+    public IEnumerator ExposeCrystal()
+    {
+        m_eye.GetComponent<SphereCollider>().enabled = true;
+        m_eye.onTriggerEnter += (c) => { m_crystalHealth -= 25f; }; //Double the damage that the player deals when we have a hook for it
+
+        yield return new WaitUntil(() => m_crystalHealth <= 0);
+
+        m_crystalHealth = 100f;
+
+        m_eye.onTriggerEnter -= (c) => { m_crystalHealth -= 25f; };
+        m_eye.GetComponent<SphereCollider>().enabled = false;
     }
 
     public void ChangePhase(int phase)

@@ -27,6 +27,7 @@ public class SandstormStrategy : IStrategy
         m_isActive = false;
         m_callback.RemoveAllListeners();
         m_client.StopCoroutine(Sandstorm());
+        m_client.StopCoroutine(((GolemAI)m_client).ExposeCrystal());
     }
 
     public void Execute(Client client, UnityAction callback = null)
@@ -34,6 +35,7 @@ public class SandstormStrategy : IStrategy
         m_isActive = true;
         m_callback.AddListener(callback);
         m_animator.SetTrigger("sandstorm");
+        m_client.StartCoroutine(((GolemAI)m_client).ExposeCrystal());
     }
 
     public SandstormStrategy(Client client, GameObject sandstormPrefab, string tag, Action<object[]> onCollision, float speed = 2.5f, float sandstormLength = 3.5f)
