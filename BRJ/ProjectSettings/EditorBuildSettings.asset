@@ -5,9 +5,18 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/_Scenes/Final Scenes/MenuScene.unity
+    guid: ca54aa16b2241984d8bc20518ac3dd5a
+  - enabled: 1
+    path: Assets/_Scenes/Final Scenes/RuinedTownScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/_Scenes/Final Scenes/CathedralInside.unity
+    guid: 2af6aee2bc6191047bcadf46eff9e657
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 25810e8e587ca724f8d37a96a99ea66b,
       type: 2}
