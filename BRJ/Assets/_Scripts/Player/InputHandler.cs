@@ -40,7 +40,7 @@ public class InputHandler : MonoBehaviour
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
         playerManager = GetComponent<PlayerManager>();
-        cameraHandler = GetComponent<CameraHandler>();
+        cameraHandler = FindObjectOfType<CameraHandler>();
     }
 
 
@@ -72,13 +72,14 @@ public class InputHandler : MonoBehaviour
 
     public void TickInput(float delta)
     {
-        MoveInput(delta);
+        HandleMoveInput(delta);
         //HandleRollInput(delta);
         HandleAttackInput(delta);
         //HandleQuickSlotInput();
+        HandleLockOnInput();
     }
 
-    private void MoveInput(float delta)
+    private void HandleMoveInput(float delta)
     {
         horizontal = movementInput.x;
         vertical = movementInput.y;
@@ -166,9 +167,27 @@ public class InputHandler : MonoBehaviour
     {
         if (lockOnInput && lockOnFlag == false)
         {
+            cameraHandler.ClearLockOnTargets();
             lockOnInput = false;
-            lockOnFlag = true;
-            /*cameraHandler =*/
+
+
+            cameraHandler.HandleLockOn();
+            if (cameraHandler.nearestLockOnTarget != null)
+            {
+                cameraHandler.currentlockOnTarget = cameraHandler.nearestLockOnTarget;
+                lockOnFlag = true;
+            }
+
         }
+        else if (lockOnInput && lockOnFlag)
+        {
+            lockOnInput = false;
+            lockOnFlag = false;
+            //clear lock on targets
+            cameraHandler.ClearLockOnTargets();
+
+
+        }
+        cameraHandler.SetCameraHeight();
     }
 }
