@@ -17,6 +17,8 @@ public class BigSlamStrategy : IStrategy
     private Vector3 m_offset;
     private float m_magnitude;
     private AnimationStateController m_controller;
+    public StrategyMaxRange MaxRange { get; set; } = StrategyMaxRange.Small;
+
 
     public void Disable()
     {

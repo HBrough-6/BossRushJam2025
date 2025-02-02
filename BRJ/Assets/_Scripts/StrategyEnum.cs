@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace ChaseMorgan.Strategy
 {
     //📋 = in progress
+    //❎ = scoped
     //✅ = finished
     public enum StrategyEnum
     {
@@ -23,8 +24,8 @@ namespace ChaseMorgan.Strategy
         Roll, //✅
         Airstrike, //✅
         RockLift, //✅
-        Leap, //📋
-        Spin, //📋
+        Leap, //❎
+        Spin, //✅
         Sandstorm //✅
     }
 

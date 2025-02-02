@@ -3,9 +3,17 @@
  * UPDATED: 01/17/2025 | BY: Chase Morgan  | COMMENTS: Added Class
  * FILE DESCRIPTION: Golem AI class to handle most things that Golem will need to do
  */
+using ChaseMorgan.Strategy;
+using JetBrains.Annotations;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class GolemAI : BossAI
@@ -14,6 +22,8 @@ public class GolemAI : BossAI
     private GameObject m_playerReference;
     [SerializeField]
     private BossCollider[] m_leftArms, m_rightArms;
+
+    private BossMoveset m_currentMoveset;
 
     [Header("Settings"), SerializeField]
     private GolemSettings m_settings;
@@ -30,6 +40,9 @@ public class GolemAI : BossAI
     private ChargeStrategy m_leap;
     private SpinStrategy m_spin;
     private SandstormStrategy m_sandstorm;
+
+    private bool m_changeMoveset;
+    private float m_attackInterval = 5.0f;
 
     protected override void Awake()
     {
@@ -56,52 +69,80 @@ public class GolemAI : BossAI
         m_strategies.Add(m_spin);
     }
 
-    private void OnGUI()
+    public void ChangePhase(int phase)
     {
-        if (GUILayout.Button("Attempt Test Combo"))
+        CurrentPhase = (BossState)phase;
+
+        m_attackInterval = 5.0f / phase;
+
+        UpdateMoveset();
+    }
+
+    private void UpdateMoveset()
+    {
+        foreach (BossMoveset moves in m_movesets)
         {
-            StartCoroutine(ApplyCombo(m_movesets[0].combos[0]));
+            if (moves.activePhase == CurrentPhase)
+            {
+                m_currentMoveset = moves;
+                break;
+            }
         }
 
-        if (GUILayout.Button("Attempt Rock Lift"))
+        m_changeMoveset = true;
+    }
+
+    public override void StartBossFight()
+    {
+        base.StartBossFight();
+
+        ChangePhase(1);
+
+        StartCoroutine(BossFight());
+    }
+
+    private IEnumerator BossFight()
+    {
+        if (m_currentMoveset == null) yield break;
+
+        while (!m_changeMoveset)
         {
-            ApplyStrategy<RockLiftStrategy>(() => DisableStrategy<RockLiftStrategy>());
+            bool finished = false;
+            if (UnityEngine.Random.Range(0.0f, 1.0f) > 0.25f) //If over .25f, do a combo
+            {
+                StartCoroutine(ApplyCombo(m_currentMoveset.combos[UnityEngine.Random.Range(0, m_currentMoveset.combos.Length)], () => finished = true));
+            }
+            else
+            {
+                StrategyEnumerator.strategies.TryGetValue(m_currentMoveset.attacks[UnityEngine.Random.Range(0, m_currentMoveset.attacks.Length)], out Type strat);
+                MethodInfo info = typeof(Client).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => {
+                    return m.Name == nameof(ApplyStrategy) &&
+                                m.IsGenericMethodDefinition &&
+                                m.GetParameters().Length == 1 &&
+                                m.GetParameters()[0].ParameterType == typeof(UnityAction);
+                });
+
+                if (info != null)
+                {
+                    MethodInfo gen = info.MakeGenericMethod(strat);
+
+                    MethodInfo disable = typeof(Client).GetMethod(nameof(DisableStrategy), BindingFlags.Public | BindingFlags.Instance);
+                    disable = disable.MakeGenericMethod(strat);
+                    UnityAction callback = () => { finished = true; disable.Invoke(this, null); };
+
+                    Debug.Log(gen);
+
+                    gen.Invoke(this, new object[] { callback });
+                }
+            }
+
+            yield return new WaitUntil(() => finished);
+
+            yield return new WaitForSeconds(m_attackInterval);
         }
 
-        if (GUILayout.Button("Attempt Left Slam"))
-        {
-            ApplyStrategy<SlamLeftStrategy>(() => DisableStrategy<SlamLeftStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Right Slam"))
-        {
-            ApplyStrategy<SlamRightStrategy>(() => DisableStrategy<SlamRightStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Big Slam"))
-        {
-            ApplyStrategy<BigSlamStrategy>(() => DisableStrategy<BigSlamStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Roll"))
-        {
-            ApplyStrategy<RollStrategy>(() => DisableStrategy<RollStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Airstrike"))
-        {
-            ApplyStrategy<AirstrikeStrategy>(() => DisableStrategy<AirstrikeStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Swipe Left"))
-        {
-            ApplyStrategy<SwipeLeftStrategy>(() => DisableStrategy<SwipeLeftStrategy>());
-        }
-
-        if (GUILayout.Button("Attempt Swipe Right"))
-        {
-            ApplyStrategy<SwipeRightStrategy>(() => DisableStrategy<SwipeRightStrategy>());
-        }
+        m_changeMoveset = false;
+        StartCoroutine(BossFight());
     }
 
     public void ToggleRollCollider(bool b)
@@ -136,4 +177,17 @@ public class GolemAI : BossAI
             m_spin.Collision(collision);
         }
     }
+
+    private void OnGUI()
+{
+        if (GUILayout.Button("Begin AI"))
+        {
+            StartBossFight();
+        }
+
+        if (GUILayout.Button("Roll"))
+        {
+            ApplyStrategy<RollStrategy>(() => DisableStrategy<RollStrategy>());
+        }
+} 
 }

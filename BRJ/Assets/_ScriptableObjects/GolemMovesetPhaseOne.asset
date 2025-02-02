@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe8613bce56a1c245a12b1d1c348efb9, type: 2}
   - {fileID: 11400000, guid: 50271007b6bc07d47ab235254745d354, type: 2}
   - {fileID: 11400000, guid: 5e8cfa4f1d6846c4ab07087ce7218362, type: 2}
-  attacks: 0800000009000000
+  attacks: 05000000
   activePhase: 1

@@ -24,6 +24,9 @@ public class MoveStrategy : IStrategy
 
     private Vector3 m_rotVel;
 
+    public StrategyMaxRange MaxRange { get; set; }
+
+
     public float Speed { get; set; } //This allows systems to update the speed at runtime incase we need to speed up/down the client
     public float MaxCloseRange { get; set; }
 
@@ -44,7 +47,7 @@ public class MoveStrategy : IStrategy
     {
         m_active = false;
         //m_client.StartCoroutine(SlowDown());
-        m_event?.Invoke();
+        //m_event?.Invoke();
         m_agent.isStopped = true;
     }
 
@@ -65,38 +68,20 @@ public class MoveStrategy : IStrategy
         //bool db = false;
         while (m_active)
         {
-            /*if (Mathf.Abs(Vector3.Distance(new Vector3(m_client.transform.position.x, 0, m_client.transform.position.z),
-                                 new Vector3(m_target.position.x, 0, m_target.position.z))) <= MaxCloseRange)
-            {
-                if (!db)
-                {
-                    db = true;
-                    //m_client.StartCoroutine(SlowDown());
-                }
-
-                yield return null;
-                continue;
-            }
-
-            db = false; */
 
 
-            if (m_client.transform.rotation != Quaternion.LookRotation(m_target.position - m_client.transform.position, Vector3.up))
-                m_client.transform.rotation =
-                    Quaternion.Euler(m_client.transform.rotation.x,
-                                     Vector3.SmoothDamp(m_client.transform.rotation.eulerAngles,
-                                                        Quaternion.LookRotation(m_target.position - m_client.transform.position, Vector3.up).eulerAngles,
-                                                        ref m_rotVel,
-                                                        0.125f).y, 
-                                     m_client.transform.rotation.z);
 
-            Debug.Log("Moving");
+            m_client.transform.rotation = Quaternion.Lerp(m_client.transform.rotation, Quaternion.LookRotation(m_target.position - m_client.transform.position, Vector3.up), Time.deltaTime * 5);
 
             m_agent.destination = m_target.transform.position;
             m_agent.speed = Speed;
 
-            //Vector3 velocity = Vector3.ClampMagnitude(100 * Speed * Time.deltaTime * (m_target.transform.position - m_client.transform.position).normalized, Speed);
-            //m_rigid.velocity = new Vector3(velocity.x, m_rigid.velocity.y, velocity.z);
+            if (Vector3.Distance(m_client.transform.position, m_target.transform.position) <= MaxCloseRange)
+            {
+                m_event.Invoke();
+                m_active = false;
+                yield return new WaitUntil(() => m_active);
+            }
 
             yield return new WaitForFixedUpdate();
         }

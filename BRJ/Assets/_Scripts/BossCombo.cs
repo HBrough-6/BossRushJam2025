@@ -13,6 +13,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewBossCombo", menuName = "Boss/New Combo")]
 public class BossCombo : ScriptableObject
 {
+    public StrategyMaxRange triggerRange;
     public StrategyEnum[] combo;
     [Tooltip("The timings in between each attack (leave unitialized for no time inbetween attacks)")]
     public float[] timings;

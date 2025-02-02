@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class TestStrategy : IStrategy
 {
     private bool m_active = false;
+    public StrategyMaxRange MaxRange { get; set; } = StrategyMaxRange.Custom;
+
     public void Disable()
     {
         m_active = false;

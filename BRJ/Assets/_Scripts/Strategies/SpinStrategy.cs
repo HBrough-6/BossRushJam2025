@@ -18,6 +18,9 @@ public class SpinStrategy : IStrategy
     private int m_spinIterations, m_spinIndex;
     private float m_speed;
 
+    public StrategyMaxRange MaxRange { get; set; }
+
+
     public void Disable()
     {
         m_isActive = false;
@@ -64,6 +67,12 @@ public class SpinStrategy : IStrategy
             yield return null;
         }
 
+        StopSpin();
+
+    }
+
+    private void StopSpin()
+    {
         m_animator.SetTrigger("spinOff");
         m_callback.Invoke();
     }
@@ -71,5 +80,10 @@ public class SpinStrategy : IStrategy
     public void Collision(Collision collision)
     {
         m_onCollision?.Invoke(new object[] { GetType().Name, collision.gameObject });
+
+        if (collision.transform.CompareTag(m_tag))
+        {
+            StopSpin();
+        }
     }
 }

@@ -105,8 +105,9 @@ public class BossAI : AIBehaviour , ISubject
         CurrentPhase = BossState.PhaseOne;
     }
 
-    public virtual IEnumerator ApplyCombo(BossCombo combo)
+    public virtual IEnumerator ApplyCombo(BossCombo combo, UnityAction comboCallback = null)
     {
+        Debug.Log("Applying Combo");
         List<Type> strats = new();
 
         foreach (StrategyEnum e in combo.combo)
@@ -121,6 +122,27 @@ public class BossAI : AIBehaviour , ISubject
 
         for (int index = 0; index < strats.Count; index++) //Since we need to convert from variable to type we need to use reflection to invoke a generic method. 
         {
+            IStrategy s = null;
+            foreach (IStrategy st in m_strategies)
+            {
+                if (strats[index].Name == st.GetType().Name)
+                {
+                    s = st;
+                }
+            }
+
+            bool wait = false;
+            if (s.MaxRange == StrategyMaxRange.Small)
+            {
+                wait = true;
+
+                DisableStrategy<MoveStrategy>();
+                ApplyStrategy<MoveStrategy>(() => wait = false);
+            }
+
+            yield return new WaitUntil(() => !wait);
+            DisableStrategy<MoveStrategy>();
+
             MethodInfo info = typeof(Client).GetMethods(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault(m => { //Gets the first method that matches these parameters
                 return m.Name == nameof(ApplyStrategy) &&
                             m.IsGenericMethodDefinition &&
@@ -145,9 +167,11 @@ public class BossAI : AIBehaviour , ISubject
             yield return new WaitUntil(() => finished);
             finished = false;
 
-            if (combo.timings.Length < index)
-                yield return new WaitForSeconds(combo.timings[index]);
+            /*if (combo.timings.Length < index - 1)
+                yield return new WaitForSeconds(combo.timings[index]); */
         }
+
+        comboCallback?.Invoke();
     }
 
     protected override void Awake()

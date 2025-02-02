@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,7 +155,7 @@ Transform:
   m_GameObject: {fileID: 244303965}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000026822087}
-  m_LocalPosition: {x: 0, y: 0, z: 9.5}
+  m_LocalPosition: {x: 0, y: 0.5, z: 9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -182,7 +182,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 2
-  m_Height: 5
+  m_Height: 4
   m_Direction: 1
   m_Center: {x: 0, y: 2, z: 0}
 --- !u!114 &244303968
@@ -202,12 +202,30 @@ MonoBehaviour:
   m_health: 100
   m_maxHealth: 100
   m_canDie: 1
-  m_healthEvents: []
+  m_healthEvents:
+  - healthEvent:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 244303968}
+          m_TargetAssemblyTypeName: GolemAI, Assembly-CSharp
+          m_MethodName: ChangePhase
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    healthTrigger: 60
+    isActive: 0
   onDeath:
     m_PersistentCalls:
       m_Calls: []
   m_movesets:
-  - {fileID: 11400000, guid: c8811c7f57258274dabce6046cab52a9, type: 2}
+  - {fileID: 11400000, guid: 20eb0892352914543892bcfb0db131b0, type: 2}
+  - {fileID: 11400000, guid: 350c370180a469d4692a6316c43f03ae, type: 2}
   m_deathAudio: {fileID: 0}
   m_playerReference: {fileID: 1723675047}
   m_leftArms:
@@ -543,7 +561,7 @@ MonoBehaviour:
   m_VoxelSize: 0.6666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 2fabad9afeb44d24e9711403c260da0d, type: 2}
-  m_BuildHeightMesh: 0
+  m_BuildHeightMesh: 1
 --- !u!1 &571006566
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +874,7 @@ Transform:
   m_GameObject: {fileID: 1723675047}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.08, y: 1, z: -10.82}
+  m_LocalPosition: {x: 0.33, y: 1, z: -10.72}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

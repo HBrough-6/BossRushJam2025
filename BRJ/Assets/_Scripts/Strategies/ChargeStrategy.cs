@@ -9,6 +9,9 @@ public class ChargeStrategy : IStrategy
     private bool m_isActive = false;
     private Client m_client;
     private UnityEvent m_callback = new();
+
+    public StrategyMaxRange MaxRange { get; set; }
+
     public void Disable()
     {
         m_isActive = false;

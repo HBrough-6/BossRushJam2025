@@ -15,6 +15,9 @@ public class SwipeRightStrategy : IStrategy
     private string m_tag;
     private bool m_triggered = false;
     private Animator m_animator;
+
+    public StrategyMaxRange MaxRange { get; set; } = StrategyMaxRange.Small;
+
     public void Disable()
     {
         m_isActive = false;

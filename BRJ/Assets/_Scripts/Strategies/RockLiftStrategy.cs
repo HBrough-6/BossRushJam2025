@@ -15,6 +15,9 @@ public class RockLiftStrategy : IStrategy
     private Transform m_instanceContainer;
     private float m_areaMagnitude;
 
+    public StrategyMaxRange MaxRange { get; set; }
+
+
     private List<GameObject> m_rockInstances = new(), m_hazardAreaInstances = new();
     public void Disable()
     {

@@ -16,7 +16,8 @@ using UnityEngine.Events;
 public struct HealthEvent //These will fire methods if a certain threshold of health is met. These can be set either in the inspector or via code.
 {
     public UnityEvent healthEvent;
-    public int healthTrigger;
+    [Range(0, 100f)]
+    public float healthTrigger;
     public bool isActive;
 
     /// <summary>
@@ -24,7 +25,7 @@ public struct HealthEvent //These will fire methods if a certain threshold of he
     /// </summary>
     /// <param name="actions">The UnityActions that will be fired at the certain health trigger</param>
     /// <param name="trigger">The health trigger</param>
-    public HealthEvent(UnityAction[] actions, int trigger)
+    public HealthEvent(UnityAction[] actions, float trigger)
     {
         healthEvent = new UnityEvent();
         foreach (UnityAction action in actions)
@@ -78,7 +79,7 @@ public abstract class AIBehaviour : Client
 
             m_healthEvents.ForEach(e =>
             {
-                if (e.isActive && m_health <= e.healthTrigger)
+                if (e.isActive && (m_health / m_maxHealth) <= e.healthTrigger)
                 {
                     e.healthEvent?.Invoke();
                     e.isActive = false;

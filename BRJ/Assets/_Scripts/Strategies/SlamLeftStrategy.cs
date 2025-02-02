@@ -20,6 +20,9 @@ public class SlamLeftStrategy : IStrategy
     private float m_magnitude;
     private AnimationStateController m_controller;
 
+    public StrategyMaxRange MaxRange { get; set; } = StrategyMaxRange.Small;
+
+
     public void Disable()
     {
         m_callback.RemoveAllListeners();

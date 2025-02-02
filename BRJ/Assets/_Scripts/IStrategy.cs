@@ -9,6 +9,7 @@ namespace ChaseMorgan.Strategy
      */
     public interface IStrategy
     {
+        public StrategyMaxRange MaxRange { get; set; }
         public void Execute(Client client, UnityAction callback = null);
         public void Disable();
     }

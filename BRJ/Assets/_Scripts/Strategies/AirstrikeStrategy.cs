@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
 public class AirstrikeStrategy : IStrategy
 {
@@ -19,6 +18,9 @@ public class AirstrikeStrategy : IStrategy
     private bool m_airBound;
     private Vector3 hazardVel = Vector3.zero;
     private event Action<object[]> m_onCollision;
+
+    public StrategyMaxRange MaxRange { get; set; }
+
     public void Disable()
     {
         m_callback.RemoveAllListeners();
@@ -122,5 +124,7 @@ public class AirstrikeStrategy : IStrategy
         m_hazardAreaInstance = UnityEngine.Object.Instantiate(m_hazardAreaPrefab);
         m_hazardAreaInstance.SetActive(false);
         m_hazardAreaInstance.name = "Hazard_Area_Instance_" + GetType().Name;
+
+        MaxRange = StrategyMaxRange.None;
     }
 }

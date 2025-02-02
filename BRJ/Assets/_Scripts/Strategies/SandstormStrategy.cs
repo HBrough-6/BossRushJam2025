@@ -19,6 +19,9 @@ public class SandstormStrategy : IStrategy
     private float m_speed, m_sandstormLength;
     private event Action<object[]> m_onCollision;
     private string m_tag;
+
+    public StrategyMaxRange MaxRange { get; set; }
+
     public void Disable()
     {
         m_isActive = false;

@@ -15,6 +15,9 @@ public class RollStrategy : IStrategy
     private float m_maxTime, m_speed;
     private Transform m_target;
     private float m_updateFrequency;
+    private AnimationStateController m_controller;
+    public StrategyMaxRange MaxRange { get; set; }
+
 
     private float m_timeSinceLastUpdate = 0.0f;
 
@@ -46,6 +49,7 @@ public class RollStrategy : IStrategy
         {
             if (control.Label == "Roll")
             {
+                m_controller = control;
                 if (!chooseTargetDirectionOnce)
                 {
                     control.onStateUpdate += UpdateRoll;
@@ -74,6 +78,8 @@ public class RollStrategy : IStrategy
         m_client.StartCoroutine(StopRoll());
 
         m_client.GetComponent<Rigidbody>().velocity = direction * m_speed;
+
+        m_controller.onStateUpdate += (info) => { m_client.GetComponent<Rigidbody>().velocity = direction * m_speed; };
     }
 
     private IEnumerator StopRoll()

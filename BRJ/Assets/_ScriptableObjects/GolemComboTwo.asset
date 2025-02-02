@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9236428fe235c0e49bb2c0a0cbd371b1, type: 3}
   m_Name: GolemComboTwo
   m_EditorClassIdentifier: 
+  triggerRange: 1
   combo: 010000000200000003000000
   timings: []
   canBeCancelled: 0
