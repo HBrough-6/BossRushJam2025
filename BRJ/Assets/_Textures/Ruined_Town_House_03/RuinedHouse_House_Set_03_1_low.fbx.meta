@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: d55791d57a5145c44ae976250f8d1f6a
+guid: 2b6758de929d3f64283e01358b69fc72
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: RuniedTown_Props_Set_03
-    second: {fileID: 2100000, guid: 8111a1cc2343fbb48be4d66c8b59d660, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

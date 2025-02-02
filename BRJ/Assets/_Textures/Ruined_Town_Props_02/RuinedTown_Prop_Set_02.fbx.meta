@@ -3,7 +3,12 @@ guid: 9c193fefbd622fd4fba2739647a28520
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RuniedTown_Props_Set_02
+    second: {fileID: 2100000, guid: 9384a2933e2ad274caf268fe6375e44f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
