@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : CharacterManager
 {
     InputHandler inputHandler;
     Animator anim;
@@ -43,11 +43,7 @@ public class PlayerManager : MonoBehaviour
         isInteracting = anim.GetBool("isInteracting");
         canDoCombo = anim.GetBool("canDoCombo");
 
-
         inputHandler.TickInput(delta);
-        playerLocomotion.HandleMovement(delta);
-        playerLocomotion.HandleRollingAndSprinting(delta);
-        playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
 
         //CheckForInteractableObject();
     }
@@ -56,15 +52,16 @@ public class PlayerManager : MonoBehaviour
     {
         float delta = Time.fixedDeltaTime;
 
-        if (cameraHandler != null)
-        {
-            cameraHandler.FollowTarget(delta);
-            cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
-        }
+        inputHandler.HandleRollInput(delta);
+        playerLocomotion.HandleMovement(delta);
+        playerLocomotion.HandleRollingAndSprinting(delta);
+        playerLocomotion.HandleFalling(delta, playerLocomotion.moveDirection);
     }
 
     private void LateUpdate()
     {
+        float delta = Time.deltaTime;
+
         inputHandler.rollFlag = false;
         inputHandler.sprintFlag = false;
         inputHandler.rb_Input = false;
@@ -78,6 +75,12 @@ public class PlayerManager : MonoBehaviour
         if (isInAir)
         {
             playerLocomotion.inAirTimer = playerLocomotion.inAirTimer + Time.deltaTime;
+        }
+
+        if (cameraHandler != null)
+        {
+            cameraHandler.FollowTarget(delta);
+            cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
         }
     }
 

@@ -11,21 +11,26 @@ public class InputHandler : MonoBehaviour
     public bool b_Input;
     public bool rb_Input;
     public bool rt_Input;
+    public bool e_Input;
+    public bool lockOnInput;
+
     public bool d_Pad_Up;
     public bool d_Pad_Down;
     public bool d_Pad_Left;
     public bool d_Pad_Right;
-    public bool e_Input;
+
 
     public bool rollFlag;
     public bool sprintFlag;
     public bool comboFlag;
     public float rollInputTimer;
+    public bool lockOnFlag;
 
     PlayerControls inputActions;
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
     PlayerManager playerManager;
+    CameraHandler cameraHandler;
 
     Vector2 movementInput;
     Vector2 cameraInput;
@@ -35,6 +40,7 @@ public class InputHandler : MonoBehaviour
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
         playerManager = GetComponent<PlayerManager>();
+        cameraHandler = GetComponent<CameraHandler>();
     }
 
 
@@ -46,9 +52,14 @@ public class InputHandler : MonoBehaviour
             inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
             inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
 
-            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+            inputActions.PlayerActions.RB.started += i => rb_Input = true;
+            inputActions.PlayerActions.RT.started += i => rt_Input = true;
             inputActions.PlayerActions.Interact.started += i => playerManager.UseItem();
+
+            inputActions.PlayerActions.Roll.started += i => b_Input = true;
+            inputActions.PlayerActions.Roll.canceled += i => b_Input = false;
+
+            inputActions.PlayerActions.LockOn.performed += i => lockOnInput = true;
         }
 
         inputActions.Enable();
@@ -62,7 +73,7 @@ public class InputHandler : MonoBehaviour
     public void TickInput(float delta)
     {
         MoveInput(delta);
-        HandleRollInput(delta);
+        //HandleRollInput(delta);
         HandleAttackInput(delta);
         //HandleQuickSlotInput();
     }
@@ -77,10 +88,8 @@ public class InputHandler : MonoBehaviour
 
     }
 
-    private void HandleRollInput(float delta)
+    public void HandleRollInput(float delta)
     {
-        b_Input = inputActions.PlayerActions.Roll.phase == UnityEngine.InputSystem.InputActionPhase.Performed;
-
         if (b_Input)
         {
             rollInputTimer += delta;
@@ -100,8 +109,6 @@ public class InputHandler : MonoBehaviour
 
     private void HandleAttackInput(float delta)
     {
-
-
         // RB input handlesw the right hands weapons light attack
         if (rb_Input)
         {
@@ -124,8 +131,6 @@ public class InputHandler : MonoBehaviour
 
         if (rt_Input)
         {
-
-
             if (playerManager.canDoCombo)
             {
                 comboFlag = true;
@@ -157,4 +162,13 @@ public class InputHandler : MonoBehaviour
         }
     }
 
+    private void HandleLockOnInput()
+    {
+        if (lockOnInput && lockOnFlag == false)
+        {
+            lockOnInput = false;
+            lockOnFlag = true;
+            /*cameraHandler =*/
+        }
+    }
 }
