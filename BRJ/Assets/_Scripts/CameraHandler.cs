@@ -12,7 +12,7 @@ public class CameraHandler : MonoBehaviour
     private Transform myTransform;
     // position of the camera transform
     private Vector3 cameraTransformPosition;
-    private LayerMask ignoreLayers;
+    public LayerMask ignoreLayers;
     private Vector3 cameraFollowVelocity = Vector3.zero;
 
     public static CameraHandler singleton;
@@ -38,6 +38,7 @@ public class CameraHandler : MonoBehaviour
         myTransform = transform;
         defaultPosition = cameraTransform.localPosition.z;
         ignoreLayers = ~(1 << 8 | 1 << 9 | 1 << 10);
+        targetTransform = FindObjectOfType<PlayerManager>().transform;
     }
 
     // follows the current target

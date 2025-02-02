@@ -26,8 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106041542629369287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -47.688866, z: 0.00000017881393}
+  m_LocalRotation: {x: 0.000000016042605, y: 0.000000036374896, z: -2.0367373e-14,
+    w: 1}
+  m_LocalPosition: {x: 0.0009874837, y: -47.68785, z: -0.00006328462}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -61,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: a96932c618369164fb486fbdd36452cf, type: 3}
+  - {fileID: 2100000, guid: d94f58163e00a334096428415f84f9ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -124,6 +125,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2876754509586775937}
+  - component: {fileID: 6475104440010689368}
+  - component: {fileID: 2772110185030060037}
   m_Layer: 0
   m_Name: SwordPivot
   m_TagString: Untagged
@@ -141,12 +144,47 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000034170782, y: 0.000000022351726, z: 0.69762844, w: 0.7164597}
   m_LocalPosition: {x: 0.0008, y: 0.1024, z: 0.022}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2569952867750407495}
   m_Father: {fileID: 2346809542386392097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 88.474}
+--- !u!65 &6475104440010689368
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572179112605399061}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.19387966, y: 0.9265268, z: 0.047633357}
+  m_Center: {x: 0.00008776069, y: 0.64893687, z: 0.0025018011}
+--- !u!114 &2772110185030060037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3572179112605399061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61748a5de8d094147a5cb505fb1d00ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageCollider: {fileID: 0}
+  currentWeaponDamage: 25
 --- !u!1 &4500752033779299101
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,8 +213,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.0000005091095, y: -31.071678, z: 0.0617415}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.15, y: 1.15, z: 1.15}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2569952867750407495}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -208,7 +246,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: a96932c618369164fb486fbdd36452cf, type: 3}
+  - {fileID: 2100000, guid: d94f58163e00a334096428415f84f9ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -325,7 +363,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 8748892135801146194, guid: a96932c618369164fb486fbdd36452cf, type: 3}
+  - {fileID: 2100000, guid: d94f58163e00a334096428415f84f9ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
