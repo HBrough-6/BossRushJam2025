@@ -6,6 +6,7 @@ public class PlayerLocomotion : MonoBehaviour
     InputHandler inputHandler;
     public Vector3 moveDirection;
     PlayerManager playerManager;
+    Transform playerTransform;
 
     [HideInInspector]
     public Transform myTransform;

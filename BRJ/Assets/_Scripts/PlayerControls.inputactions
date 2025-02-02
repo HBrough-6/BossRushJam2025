@@ -134,6 +134,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "45f04b0a-8631-4fb8-95db-79c4e1faeec2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -162,7 +171,7 @@
                 {
                     "name": "",
                     "id": "229dce68-cae5-479e-89bb-cac6ee3da461",
-                    "path": "<Keyboard>/e",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -173,11 +182,110 @@
                 {
                     "name": "",
                     "id": "2a511dec-9999-4d7e-bce5-b622b6c8eb0d",
-                    "path": "<Keyboard>/r",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "RT",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2b660af7-a6ae-48fd-8598-7a2a261f105c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerQuickSlots",
+            "id": "8c3f14b4-d7cb-4d6a-80a0-b083b7512b47",
+            "actions": [
+                {
+                    "name": "D-Pad Up",
+                    "type": "Button",
+                    "id": "54f45d0e-50fa-40e4-9c44-30c5ae44915d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D-Pad Down",
+                    "type": "Button",
+                    "id": "2a0e6981-b97d-4fce-b1cc-7e41801d92fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D-Pad Left",
+                    "type": "Button",
+                    "id": "dc010419-734c-4e03-9db8-4fccfb0997a8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "D-Pad Right",
+                    "type": "Button",
+                    "id": "d2215f36-9bc3-4ccc-a588-26968c5b214f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f45b39b2-59a2-4189-91f8-6abeaa80c428",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5995e627-4505-4261-afd1-098f37f77a84",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "024055a3-992b-43ee-9165-33386d52af9d",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1491dcb3-d954-405d-bda3-4dd5bb4351bd",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Right",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

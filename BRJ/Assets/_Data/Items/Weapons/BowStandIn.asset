@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bad5ef2e4f8b7a74ab0b61d2228ae669, type: 3}
+  m_Name: BowStandIn
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: 1c0af4927ff7707428c59b82c5f64911, type: 2}
+  itemName: PlayerSword
+  modelPrefab: {fileID: 3159937546369123995, guid: 32e46a76a30f9754088a3de9f7a0cab2,
+    type: 3}
+  isUnarmed: 0
+  right_Hand_Idle: RIght_Arm_Idle_01
+  left_Hand_Idle: Left_Arm_Idle
+  OH_Light_Attack_1: OH_Light_Attack_1
+  OH_Light_Attack_2: OH_Light_Attack_2
+  OH_Heavy_Attack_1: OH_Heavy_Attack_1

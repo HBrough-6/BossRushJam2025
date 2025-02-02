@@ -11,14 +11,21 @@ public class InputHandler : MonoBehaviour
     public bool b_Input;
     public bool rb_Input;
     public bool rt_Input;
+    public bool d_Pad_Up;
+    public bool d_Pad_Down;
+    public bool d_Pad_Left;
+    public bool d_Pad_Right;
+    public bool e_Input;
 
     public bool rollFlag;
     public bool sprintFlag;
+    public bool comboFlag;
     public float rollInputTimer;
 
     PlayerControls inputActions;
     PlayerAttacker playerAttacker;
     PlayerInventory playerInventory;
+    PlayerManager playerManager;
 
     Vector2 movementInput;
     Vector2 cameraInput;
@@ -27,6 +34,7 @@ public class InputHandler : MonoBehaviour
     {
         playerAttacker = GetComponent<PlayerAttacker>();
         playerInventory = GetComponent<PlayerInventory>();
+        playerManager = GetComponent<PlayerManager>();
     }
 
 
@@ -52,6 +60,8 @@ public class InputHandler : MonoBehaviour
         MoveInput(delta);
         HandleRollInput(delta);
         HandleAttackInput(delta);
+        //HandleQuickSlotInput();
+        HandleInteractingButtonInput();
     }
 
     private void MoveInput(float delta)
@@ -75,7 +85,7 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            if (rollInputTimer > 0 && rollInputTimer < 0.5f)
+            if (rollInputTimer > 0 && rollInputTimer < 0.2f)
             {
                 sprintFlag = false;
                 rollFlag = true;
@@ -93,12 +103,60 @@ public class InputHandler : MonoBehaviour
         // RB input handlesw the right hands weapons light attack
         if (rb_Input)
         {
-            playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            if (playerManager.canDoCombo)
+            {
+                comboFlag = true;
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                comboFlag = false;
+            }
+            else
+            {
+                if (playerManager.canDoCombo)
+                    return;
+                if (playerManager.isInteracting)
+                    return;
+                playerAttacker.HandleLightAttack(playerInventory.rightWeapon);
+            }
+
         }
 
         if (rt_Input)
         {
-            playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+
+
+            if (playerManager.canDoCombo)
+            {
+                comboFlag = true;
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                comboFlag = false;
+            }
+            else
+            {
+                if (playerManager.canDoCombo)
+                    return;
+                if (playerManager.isInteracting)
+                    return;
+                playerAttacker.HandleHeavyAttack(playerInventory.rightWeapon);
+            }
         }
+    }
+
+    private void HandleQuickSlotInput()
+    {
+        inputActions.PlayerQuickSlots.DPadRight.performed += i => d_Pad_Right = true;
+        inputActions.PlayerQuickSlots.DPadLeft.performed += i => d_Pad_Left = true;
+        if (d_Pad_Right)
+        {
+            playerInventory.ChangeRightWeapon();
+        }
+        if (d_Pad_Left)
+        {
+            playerInventory.ChangeLeftWeapon();
+        }
+    }
+
+    private void HandleInteractingButtonInput()
+    {
+        inputActions.PlayerActions.Interact.started += i => playerManager.UseItem();
     }
 }
