@@ -45,6 +45,10 @@ public class InputHandler : MonoBehaviour
             inputActions = new PlayerControls();
             inputActions.PlayerMovement.Movement.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
             inputActions.PlayerMovement.Camera.performed += i => cameraInput = i.ReadValue<Vector2>();
+
+            inputActions.PlayerActions.RB.performed += i => rb_Input = true;
+            inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+            inputActions.PlayerActions.Interact.started += i => playerManager.UseItem();
         }
 
         inputActions.Enable();
@@ -61,7 +65,6 @@ public class InputHandler : MonoBehaviour
         HandleRollInput(delta);
         HandleAttackInput(delta);
         //HandleQuickSlotInput();
-        HandleInteractingButtonInput();
     }
 
     private void MoveInput(float delta)
@@ -97,8 +100,7 @@ public class InputHandler : MonoBehaviour
 
     private void HandleAttackInput(float delta)
     {
-        inputActions.PlayerActions.RB.performed += i => rb_Input = true;
-        inputActions.PlayerActions.RT.performed += i => rt_Input = true;
+
 
         // RB input handlesw the right hands weapons light attack
         if (rb_Input)
@@ -106,7 +108,7 @@ public class InputHandler : MonoBehaviour
             if (playerManager.canDoCombo)
             {
                 comboFlag = true;
-                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon, false);
                 comboFlag = false;
             }
             else
@@ -127,7 +129,7 @@ public class InputHandler : MonoBehaviour
             if (playerManager.canDoCombo)
             {
                 comboFlag = true;
-                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon);
+                playerAttacker.HandleWeaponCombo(playerInventory.rightWeapon, true);
                 comboFlag = false;
             }
             else
@@ -155,8 +157,4 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void HandleInteractingButtonInput()
-    {
-        inputActions.PlayerActions.Interact.started += i => playerManager.UseItem();
-    }
 }

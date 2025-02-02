@@ -14,22 +14,35 @@ public class PlayerAttacker : MonoBehaviour
         weaponSlotManager = GetComponentInChildren<WeaponSlotManager>();
     }
 
-    public void HandleWeaponCombo(WeaponItem weapon)
+    public void HandleWeaponCombo(WeaponItem weapon, bool isHeavy)
     {
         if (inputHandler.comboFlag)
         {
-            animatorHandler.anim.SetBool("canDoCombo", false);
-            if (lastAttack == weapon.OH_Light_Attack_1)
+            if (!isHeavy)
             {
-                animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_2, true);
-                lastAttack = weapon.OH_Light_Attack_2;
+                animatorHandler.anim.SetBool("canDoCombo", false);
+                if (lastAttack == weapon.OH_Light_Attack_1)
+                {
+                    animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_2, true);
+                    lastAttack = weapon.OH_Light_Attack_2;
+                }
+                else if (lastAttack == weapon.OH_Light_Attack_2)
+                {
+                    animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_3, true);
+                    lastAttack = weapon.OH_Light_Attack_3;
+                }
             }
-            else if (lastAttack == weapon.OH_Light_Attack_2)
+            else
             {
-                animatorHandler.PlayTargetAnimation(weapon.OH_Light_Attack_3, true);
-                lastAttack = weapon.OH_Light_Attack_3;
+                animatorHandler.anim.SetBool("canDoCombo", false);
+                if (lastAttack == weapon.OH_Heavy_Attack_1)
+                {
+                    animatorHandler.PlayTargetAnimation(weapon.OH_Heavy_Attack_2, true);
+                    lastAttack = weapon.OH_Heavy_Attack_2;
+                }
             }
         }
+
     }
 
     public void HandleLightAttack(WeaponItem weapon)
